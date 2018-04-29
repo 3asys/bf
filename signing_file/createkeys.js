@@ -10,7 +10,7 @@ var fs = require('fs');
 	} while (!secp256k1.privateKeyVerify(privateKey)); 
 	// Записываем приватный ключ в файл:
 	let privatkeyfilename = 'keys/alex_pr.key';
-	fs.appendFile(privatkeyfilename, privateKey.toString("hex"), function (err) {
+	fs.appendFile(privatkeyfilename, privateKey, function (err) {
 	  if (err) throw err;
 	  console.log('Saved!');
 	});
@@ -18,7 +18,7 @@ var fs = require('fs');
 	const publicKey = secp256k1.publicKeyCreate(privateKey);
 	// Записываем публичный ключ в файл:
 	let publickeyfilename = 'keys/alex_pu.key';
-	fs.appendFile(publickeyfilename, publicKey.toString("hex"), function (err) {
+	fs.appendFile(publickeyfilename, publicKey, function (err) {
 	  if (err) throw err;
 	  console.log('Saved!');
 	});
