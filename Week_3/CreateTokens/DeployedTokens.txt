@@ -1,0 +1,7 @@
+testMONOTokenERC20.sol
+https://rinkeby.etherscan.io/address/0xd14585b7738ae4c44911eed6efea4a1329d81ac7
+
+SmartzTokenERC20.sol
+https://rinkeby.etherscan.io/address/0xa5241b761806ed302c1fa316bd52076df51e9ade
+”правление через Smartz:
+https://smartz.io/instance/0ef181b0ce623fcefe1f238b
