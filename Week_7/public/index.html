@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Сервис продажи билетов</title>
+  <script src="/js/web3.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+
+<body>
+
+
+  <h1 align="center" style="margin-top: 40px"> Децентрализованный сервис продажи билетов</h1>
+  <h3 align="center" style="margin-top: 40px">Стоимость 1 билета: 10 finney<h3>
+
+<div>
+<h2>Купить билет:</h2>
+</div>
+
+<div class="container">
+	<form action='' method='post'>
+		<div class="row">
+			<div class="col-25">
+				<label for="place">Номер места:</label>
+			</div>
+			<div class="col-75">
+				<input type='text' id='place' name='place' autofocus>
+			</div>		 
+		</div>
+		<div class="row">
+			<div class="col-25">
+				<label for="row">Номер ряда:</label>
+			</div>
+			<div class="col-75">	  
+				<input type='text' id='row' name='row'>
+			</div>		 
+		</div>
+		<div class="row">
+			<div class="col-25">
+				<label for="region">Сектор:</label>
+			</div>
+			<div class="col-75">	  
+				<input type='text' id='region' id='region' name='region'>
+			</div>		 
+		</div>
+		<div class="row">
+			<div class="col-25">
+				<label for="sessionNum">Сеанс:</label>
+			</div>
+			<div class="col-75">
+				<input type='text' id='sessionNum' name='sessionNum'>
+			</div>		 
+		</div><br/>		
+		<div class="row">	  
+			<input type='submit' name='submit' value='Купить билет'>
+		</div>
+	</form>
+</div>
+
+<div>
+<h2>Проверить купленные место и сеанс по номеру билета:</h2>
+</div>
+<div class="container">
+	<form action='' method='post'>
+		<div class="row">
+			<div class="col-25">
+				<label for="ticketNum">Номер билета:</label><br/>
+				<br/><label for="ticketNum">Место и время:</label>
+			</div>
+			<div class="col-75">
+				<input type='text' id='ticketNum' name='ticketNum'><br/>
+				<br/><input type='text' id='placeParam' name='placeParam' readonly>
+			</div>		 
+		</div><br/>		
+		<div class="row">	  
+			<input type='submit' name='submit' value='Проверить'>
+		</div>
+	</form>
+</div>
+
+<div>
+<h2>Узнать, сколько всего куплено билетов:</h2>
+</div>
+<div class="container">
+	<form action='' method='post'>
+		<div class="row">
+			<div class="col-25">
+				<br/><input type='submit' name='submit' value='Узнать'>
+			</div>
+			<div class="col-75">
+				<br/><input type='text' id='PurchasedTicketsNum' name='PurchasedTicketsNum' readonly>
+			</div>		 
+		</div>
+	</form>
+</div>
+
+  
+<script src="/js/index.js"></script>
+<script>
+$(document).ready(function () {
+  var Web3 = require('web3');
+  if (typeof web3 !== 'undefined') {
+	  web3 = new Web3(web3.currentProvider);
+	  console.log('OK');
+  }
+  else {
+	  alert('You have to install MetaMask !');
+  }
+
+// JSON contract ABI:
+var contractABI = [
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "confirmOwner",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_place",
+				"type": "uint256"
+			},
+			{
+				"name": "_row",
+				"type": "uint256"
+			},
+			{
+				"name": "_region",
+				"type": "uint256"
+			},
+			{
+				"name": "_sessionNum",
+				"type": "uint256"
+			}
+		],
+		"name": "getTicket",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bytes32"
+			}
+		],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_owner",
+				"type": "address"
+			}
+		],
+		"name": "newOwner",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_ticketNum",
+				"type": "bytes32"
+			}
+		],
+		"name": "getPlace",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPurchasedTicketsNum",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "purchasing",
+		"outputs": [
+			{
+				"name": "buyer",
+				"type": "address"
+			},
+			{
+				"name": "ticketNum",
+				"type": "bytes32"
+			},
+			{
+				"name": "place",
+				"type": "uint256"
+			},
+			{
+				"name": "row",
+				"type": "uint256"
+			},
+			{
+				"name": "region",
+				"type": "uint256"
+			},
+			{
+				"name": "sessionNum",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+];
+// Указываем адрес контракта:
+var contractAddress = "0x6831a291340E3799A6ebE8df330Bdf07fbc1C959";
+// Получаем контракт:
+var contractInstance = web3.eth.contract(contractABI).at(contractAddress);
+var 		  
+		  
+      });		  
+</script>
+
+</body>
+</html>
