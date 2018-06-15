@@ -99,7 +99,7 @@
 
 <script>
 $(document).ready(function () {
-  var Web3 = require('web3');
+  let Web3 = require('web3');
   if (typeof web3 !== 'undefined') {
 	  web3 = new Web3(web3.currentProvider);
 	  console.log('OK');
@@ -109,7 +109,7 @@ $(document).ready(function () {
   }
 
 // JSON contract ABI:
-var contractABI = [
+const contractABI = [
 	{
 		"constant": false,
 		"inputs": [],
@@ -270,30 +270,30 @@ var contractABI = [
 	}
 ];
 // Указываем адрес контракта:
-var contractAddress = "0x6831a291340E3799A6ebE8df330Bdf07fbc1C959";
+const contractAddress = "0x6831a291340E3799A6ebE8df330Bdf07fbc1C959";
 // Получаем контракт:
-var contractInstance = web3.eth.contract(contractABI).at(contractAddress);
+let contractInstance = web3.eth.contract(contractABI).at(contractAddress);
 
 function getTicket()
 {
-	var place = parseInt(document.getElementById('place').value);
-	var row = parseInt(document.getElementById('row').value);
-	var region = parseInt(document.getElementById('region').value);
-	var sessionNum = parseInt(document.getElementById('sessionNum').value);
+	let place = parseInt(document.getElementById('place').value);
+	let row = parseInt(document.getElementById('row').value);
+	let region = parseInt(document.getElementById('region').value);
+	let sessionNum = parseInt(document.getElementById('sessionNum').value);
 	res1 = contractInstance.methods.getTicket(place, row, region, sessionNum).send({ from: accounts[0], gas: '2000000' });
 	document.getElementById('ticketNum').value = res1;
 }
 
 function getPlace()
 {
-	var ticketNum = parseInt(document.getElementById('ticketNum').value);
-	res2 = contractInstance.methods.getPlace(ticketNum).send({ from: accounts[0], gas: '2000000' });
+	let ticketNum = parseInt(document.getElementById('ticketNum').value);
+	let res2 = contractInstance.methods.getPlace(ticketNum).send({ from: accounts[0], gas: '2000000' });
 	document.getElementById('placeParam').value = res2;
 }
 
 function getPurchasedTicketsNum()
 {
-	res3 = contractInstance.methods.getPurchasedTicketsNum().send({ from: accounts[0], gas: '2000000' });
+	let res3 = contractInstance.methods.getPurchasedTicketsNum().send({ from: accounts[0], gas: '2000000' });
 	document.getElementById('PurchasedTicketsNum').value = res3;
 }
 		  
