@@ -10,6 +10,7 @@
 <body>
 
   <h1 align="center" style="margin-top: 40px"> Децентрализованный сервис продажи билетов</h1>
+
   <h3 align="center" style="margin-top: 40px">Стоимость 1 билета: 10 finney<h3>
 
 <div>
@@ -17,48 +18,46 @@
 </div>
 
 <div class="container">
-	<form action='' method='post'>
-		<div class="row">
-			<div class="col-25">
-				<label for="place">Номер места:</label>
-			</div>
-			<div class="col-75">
-				<input type='text' id='place' name='place' autofocus>
-			</div>		 
+	<div class="row">
+		<div class="col-25">
+			<label for="place">Номер места:</label>
 		</div>
-		<div class="row">
-			<div class="col-25">
-				<label for="row">Номер ряда:</label>
-			</div>
-			<div class="col-75">	  
-				<input type='text' id='row' name='row'>
-			</div>		 
+		<div class="col-75">
+			<input type='text' id='place' name='place' autofocus>
+		</div>		 
+	</div>
+	<div class="row">
+		<div class="col-25">
+			<label for="row">Номер ряда:</label>
 		</div>
-		<div class="row">
-			<div class="col-25">
-				<label for="region">Сектор:</label>
-			</div>
-			<div class="col-75">	  
-				<input type='text' id='region' name='region'>
-			</div>		 
+		<div class="col-75">	  
+			<input type='text' id='row' name='row'>
+		</div>		 
+	</div>
+	<div class="row">
+		<div class="col-25">
+			<label for="region">Сектор:</label>
 		</div>
-		<div class="row">
-			<div class="col-25">
-				<label for="sessionNum">Сеанс:</label>
-			</div>
-			<div class="col-75">
-				<input type='text' id='sessionNum' name='sessionNum'>
-			</div>		 
-		</div><br/>		
-		<div class="row">
-			<div class="col-25">		
-				<input type='button' value='Купить билет' onclick='getTicket();'>
-			</div>
-			<div class="col-75">	  
-				<input type='text' id='ticketNum' name='ticketNum' readonly>
-			</div>				
+		<div class="col-75">	  
+			<input type='text' id='region' name='region'>
+		</div>		 
+	</div>
+	<div class="row">
+		<div class="col-25">
+			<label for="sessionNum">Сеанс:</label>
 		</div>
-	</form>
+		<div class="col-75">
+			<input type='text' id='sessionNum' name='sessionNum'>
+		</div>		 
+	</div><br/>		
+	<div class="row">
+		<div class="col-25">		
+			<input type='button' value='Купить билет' onclick='getTicket();'>
+		</div>
+		<div class="col-75">	  
+			<input type='text' id='ticketNum' name='ticketNum' readonly>
+		</div>				
+	</div>
 </div>
 
 <div>
