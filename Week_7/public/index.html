@@ -9,7 +9,6 @@
 
 <body>
 
-
   <h1 align="center" style="margin-top: 40px"> Децентрализованный сервис продажи билетов</h1>
   <h3 align="center" style="margin-top: 40px">Стоимость 1 билета: 10 finney<h3>
 
@@ -40,7 +39,7 @@
 				<label for="region">Сектор:</label>
 			</div>
 			<div class="col-75">	  
-				<input type='text' id='region' id='region' name='region'>
+				<input type='text' id='region' name='region'>
 			</div>		 
 		</div>
 		<div class="row">
@@ -51,14 +50,19 @@
 				<input type='text' id='sessionNum' name='sessionNum'>
 			</div>		 
 		</div><br/>		
-		<div class="row">	  
-			<input type='submit' name='submit' value='Купить билет'>
+		<div class="row">
+			<div class="col-25">		
+				<input type='button' value='Купить билет' onclick='getTicket();'>
+			</div>
+			<div class="col-75">	  
+				<input type='text' id='ticketNum' name='ticketNum' readonly>
+			</div>				
 		</div>
 	</form>
 </div>
 
 <div>
-<h2>Проверить купленные место и сеанс по номеру билета:</h2>
+<h2>Проверить забронированные место и время по номеру билета:</h2>
 </div>
 <div class="container">
 	<form action='' method='post'>
@@ -73,7 +77,7 @@
 			</div>		 
 		</div><br/>		
 		<div class="row">	  
-			<input type='submit' name='submit' value='Проверить'>
+			<input type='button' value='Проверить' onclick='getPlace();'>
 		</div>
 	</form>
 </div>
@@ -85,7 +89,7 @@
 	<form action='' method='post'>
 		<div class="row">
 			<div class="col-25">
-				<br/><input type='submit' name='submit' value='Узнать'>
+				<br/><input type='button' value='Узнать' onclick='getPurchasedTicketsNum();'>
 			</div>
 			<div class="col-75">
 				<br/><input type='text' id='PurchasedTicketsNum' name='PurchasedTicketsNum' readonly>
@@ -94,8 +98,6 @@
 	</form>
 </div>
 
-  
-<script src="/js/index.js"></script>
 <script>
 $(document).ready(function () {
   var Web3 = require('web3');
@@ -272,9 +274,31 @@ var contractABI = [
 var contractAddress = "0x6831a291340E3799A6ebE8df330Bdf07fbc1C959";
 // Получаем контракт:
 var contractInstance = web3.eth.contract(contractABI).at(contractAddress);
-var 		  
+
+function getTicket()
+{
+	var place = parseInt(document.getElementById('place').value);
+	var row = parseInt(document.getElementById('row').value);
+	var region = parseInt(document.getElementById('region').value);
+	var sessionNum = parseInt(document.getElementById('sessionNum').value);
+	res1 = contractInstance.methods.getTicket(place, row, region, sessionNum).send({ from: accounts[0], gas: '2000000' });
+	document.getElementById('ticketNum').value = res1;
+}
+
+function getPlace()
+{
+	var ticketNum = parseInt(document.getElementById('ticketNum').value);
+	res2 = contractInstance.methods.getPlace(ticketNum).send({ from: accounts[0], gas: '2000000' });
+	document.getElementById('placeParam').value = res2;
+}
+
+function getPurchasedTicketsNum()
+{
+	res3 = contractInstance.methods.getPurchasedTicketsNum().send({ from: accounts[0], gas: '2000000' });
+	document.getElementById('PurchasedTicketsNum').value = res3;
+}
 		  
-      });		  
+});		  
 </script>
 
 </body>
