@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html >
+<html>
 <head>
   <meta charset="UTF-8">
   <title>Сервис продажи билетов</title>
-  <script src="/js/web3.js"></script>
+  <script src="web3.js"></script>
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
 
@@ -98,18 +98,17 @@
 </div>
 
 <script>
-$(document).ready(function () {
-  let Web3 = require('web3');
-  if (typeof web3 !== 'undefined') {
-	  web3 = new Web3(web3.currentProvider);
-	  console.log('OK');
-  }
-  else {
-	  alert('You have to install MetaMask !');
-  }
+function getTicket(){
+	let Web3 = require('web3');
+	if (typeof web3 !== 'undefined'){
+		web3 = new Web3(web3.currentProvider);
+	}
+	else {
+		alert('You have to install MetaMask !');
+	}
 
 // JSON contract ABI:
-const contractABI = [
+const abi = [
 	{
 		"constant": false,
 		"inputs": [],
@@ -272,32 +271,55 @@ const contractABI = [
 // Указываем адрес контракта:
 const contractAddress = "0x6831a291340E3799A6ebE8df330Bdf07fbc1C959";
 // Получаем контракт:
-let contractInstance = web3.eth.contract(contractABI).at(contractAddress);
+//var contractInstance = web3.eth.contract(contractABI).at(contractAddress);
+let MyContract = web3.eth.contract(abi);
+let myContractInstance = MyContract.at(contractAddress);
 
-function getTicket()
-{
-	let place = parseInt(document.getElementById('place').value);
-	let row = parseInt(document.getElementById('row').value);
-	let region = parseInt(document.getElementById('region').value);
-	let sessionNum = parseInt(document.getElementById('sessionNum').value);
-	res1 = contractInstance.methods.getTicket(place, row, region, sessionNum).send({ from: accounts[0], gas: '2000000' });
+let place = parseInt(document.getElementById('place').value);
+let row = parseInt(document.getElementById('row').value);
+let region = parseInt(document.getElementById('region').value);
+let sessionNum = parseInt(document.getElementById('sessionNum').value);
+let res1 = mycontractInstance.getTicket(place, row, region, sessionNum).val();
+web3.eth.sendTransaction({
+	to: contractAddress,
+	from: web3.eth.accounts[0],
+	data: functionData,
+	value: web3.toWei(10, "finney")
+},
+	function (error) {
+		console.log(error);
+	}
+);
 	document.getElementById('ticketNum').value = res1;
 }
 
 function getPlace()
 {
 	let ticketNum = parseInt(document.getElementById('ticketNum').value);
-	let res2 = contractInstance.methods.getPlace(ticketNum).send({ from: accounts[0], gas: '2000000' });
+	let res2 = mycontractInstance.methods.getPlace(ticketNum).send({ from: accounts[0], gas: '2000000' });
+	web3.eth.sendTransaction({
+			to:contractAddress,
+			from:web3.eth.accounts[0]
+		},
+		function(error, response){
+			console.log(response);
+		});		
 	document.getElementById('placeParam').value = res2;
 }
 
 function getPurchasedTicketsNum()
 {
-	let res3 = contractInstance.methods.getPurchasedTicketsNum().send({ from: accounts[0], gas: '2000000' });
+	let res3 = mycontractInstance.methods.getPurchasedTicketsNum().send({ from: accounts[0], gas: '2000000' });
+	web3.eth.sendTransaction({
+			to:contractAddress,
+			from:web3.eth.accounts[0]
+		},
+		function(error, response){
+			console.log(response);
+		});	
 	document.getElementById('PurchasedTicketsNum').value = res3;
 }
-		  
-});		  
+	  
 </script>
 
 </body>
