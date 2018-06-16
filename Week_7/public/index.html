@@ -291,6 +291,7 @@ res1 = myContractInstance.getTicket(place, row, region, sessionNum,
 //let res1 = myContractInstance.getTicket(place, row, region, sessionNum).val();
 //console.log(res1);
 //alert("1");
+/*
 web3.eth.sendTransaction({
 	to: contractAddress,
 	from: web3.eth.accounts[0],
@@ -301,6 +302,7 @@ web3.eth.sendTransaction({
 		console.log(error);
 	}
 );
+*/
 	document.getElementById('ticketNum').value = res1;
 }
 function getPlace(){
@@ -491,6 +493,7 @@ function getPlace(){
 			else console.error(error);
 		}	
 	);
+/*
 	web3.eth.sendTransaction({
 			to:contractAddress,
 			from:web3.eth.accounts[0]
@@ -498,6 +501,7 @@ function getPlace(){
 		function(error, response){
 			console.log(response);
 		});		
+*/
 	document.getElementById('placeParam').value = res2;
 }
 function getPurchasedTicketsNum(){
@@ -686,7 +690,7 @@ function getPurchasedTicketsNum(){
 			else console.error(error);
 		}	
 	);	
-
+/*
 	web3.eth.sendTransaction({
 			to:contractAddress,
 			from:web3.eth.accounts[0]
@@ -694,6 +698,7 @@ function getPurchasedTicketsNum(){
 		function(error, response){
 			console.log(response);
 		});	
+*/
 	document.getElementById('PurchasedTicketsNum').value = res3;
 }
 	  
