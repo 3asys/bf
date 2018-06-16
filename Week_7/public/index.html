@@ -484,7 +484,7 @@ function getPlace(){
 	let ticketNum = parseInt(document.getElementById('ticketNum').value);
 	web3.eth.defaultAccount = web3.eth.accounts[0];
 
-	let res2 = mycontractInstance.getPlace(ticketNum,
+	let res2 = myContractInstance.getPlace(ticketNum,
 		{
 			gas: 320000
 		},		
@@ -681,7 +681,7 @@ function getPurchasedTicketsNum(){
 	let myContractInstance = MyContract.at(contractAddress);
 	web3.eth.defaultAccount = web3.eth.accounts[0];
 
-	let res3 = mycontractInstance.getPurchasedTicketsNum(
+	let res3 = myContractInstance.getPurchasedTicketsNum(
 		{
 			gas: 320000
 		},		
