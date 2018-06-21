@@ -27,6 +27,8 @@ contract TicketMan {
       _;
     }
     
+    event getTicketNum(uint indexed ticketNum);
+    
     constructor () public {
         // Указываем адрес на который должен зачисляться эфир за билеты:
         owner = msg.sender;
@@ -53,16 +55,19 @@ contract TicketMan {
     }
     
     // Функция для получения эфира и выдачи билета:
-    function getTicket(uint _place, uint _row, uint _region,  uint _sessionNum) external payable returns(uint numOfTicket) {
+    function getTicket(uint _place, uint _row, uint _region,  uint _sessionNum) public payable {
         require(msg.value == ticketPrice); // Если прислано столько эфира, сколько нужно:
         owner.transfer(msg.value); // Переводим плату за место владельцу (в кассу)
     
         // Вычисляем уникальный номер билета:
-        numOfTicket = uint256(keccak256(
+        uint numOfTicket = uint256(keccak256(
             abi.encodePacked(now, msg.sender, _place, _row, _region, _sessionNum)
         ));
         
         bookIt(_place, _row, _region, _sessionNum, numOfTicket); // Бронируем место
+        
+        emit getTicketNum(numOfTicket); // Вызываем событие getTicketNum, которое должно вернуть номер билета
+        
     }
     
     // Бронирование мест:
