@@ -19,9 +19,9 @@ window.addEventListener('load', function() {
 	}
 
 	// Сохраняем JSON ABI смарт-контракта:
-	const abi = [{"constant":true,"inputs":[{"name":"_ticketNum","type":"uint256"}],"name":"getPlace","outputs":[{"name":"pPlace","type":"uint256"},{"name":"pRow","type":"uint256"},{"name":"pRegion","type":"uint256"},{"name":"pSessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"purchasing","outputs":[{"name":"buyer","type":"address"},{"name":"ticketNum","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"newOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPurchasedTicketsNum","outputs":[{"name":"pTicketNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_place","type":"uint256"},{"name":"_row","type":"uint256"},{"name":"_region","type":"uint256"},{"name":"_sessionNum","type":"uint256"}],"name":"getTicket","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"ticketNum","type":"uint256"}],"name":"getTicketNum","type":"event"}];
+	const abi = [{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"purchasing","outputs":[{"name":"buyer","type":"address"},{"name":"ticketNum","type":"bytes32"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getPlace","outputs":[{"name":"pPlace","type":"uint256"},{"name":"pRow","type":"uint256"},{"name":"pRegion","type":"uint256"},{"name":"pSessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"newOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPurchasedTicketsNum","outputs":[{"name":"pTicketNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_place","type":"uint256"},{"name":"_row","type":"uint256"},{"name":"_region","type":"uint256"},{"name":"_sessionNum","type":"uint256"}],"name":"getTicket","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"ticketNum","type":"bytes32"}],"name":"getTicketNum","type":"event"}];
 	// Указываем адрес контракта:
-	const contractAddress = "0x706e56a31ec18bf3f133a3da0d83bdf9A27c5fe2";
+	const contractAddress = "0x23Dd17acd12C6A2Fc8C4B46535CDC8eA28d38F43";
 	// Получаем контракт:
 	//var contractInstance = web3.eth.contract(contractABI).at(contractAddress);
 	let MyContract = web3.eth.contract(abi);
@@ -34,7 +34,7 @@ window.addEventListener('load', function() {
 		if (!error)
 		{
 			// При возникновении события, выводим аргумент ticketNum из массива аргументов args лога исполнения контракта:
-			document.getElementById('ticketNum').value = result.args.ticketNum
+			document.getElementById('ticketNum').value = result.args.ticketNum.toString()
 		} else {
 			console.log('Error in myEvent event handler: ' + error);
 		}
@@ -62,14 +62,18 @@ async function getTicket(){
 async function getPlace(){
 	let ticketNum = parseInt(document.getElementById('ticketNum').value);
 	await myContractInstance.getPlace(ticketNum,
-		{
-			gas: 320000
-		},		
-		function(error, result) { 
+		function(error, result) {
 			if(!error)
-				document.getElementById('placeParam').value = result;
-			else 
+			{
+				let pPlace = result[0];
+				let pRow = result[1];
+				let pRegion = result[2];
+				let pSessionNum = result[3];
+				let rslt = "Ряд: " + pRow + " Место: " + pPlace + " Сектор: " + pRegion + " Сеанс: " + pSessionNum;
+				document.getElementById('placeParam').value = rslt;
+			} else {
 				console.error(error);
+			}
 		}	
 	);
 }

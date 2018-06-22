@@ -1,14 +1,14 @@
 pragma solidity ^0.4.20;
 
-/// @title Смарт-контракт продажи билетов
-/// @author 3asys
+// @title Смарт-контракт продажи билетов
+// @author 3asys
 
 contract TicketMan {
 
     // Покупка:
     struct Purchase {
         address buyer; // адрес покупателя
-        uint ticketNum; // Номер билета
+        bytes32 ticketNum; // Номер билета
         uint place; // Место
         uint row; // Ряд
         uint region; // Сектор, группа мест (партер, бельэтаж, ...)
@@ -27,7 +27,7 @@ contract TicketMan {
       _;
     }
     
-    event getTicketNum(uint indexed ticketNum);
+    event getTicketNum(bytes32 indexed ticketNum);
     
     constructor () public {
         // Указываем адрес на который должен зачисляться эфир за билеты:
@@ -60,9 +60,9 @@ contract TicketMan {
         owner.transfer(msg.value); // Переводим плату за место владельцу (в кассу)
     
         // Вычисляем уникальный номер билета:
-        uint numOfTicket = uint256(keccak256(
+        bytes32 numOfTicket = keccak256(
             abi.encodePacked(now, msg.sender, _place, _row, _region, _sessionNum)
-        ));
+        );
         
         bookIt(_place, _row, _region, _sessionNum, numOfTicket); // Бронируем место
         
@@ -71,13 +71,13 @@ contract TicketMan {
     }
     
     // Бронирование мест:
-    function bookIt(uint _place, uint _row, uint _region, uint _sessionNum, uint256 _numOfTicket) private {
+    function bookIt(uint _place, uint _row, uint _region, uint _sessionNum, bytes32 _numOfTicket) private {
         // Создаем новую запись в массиве:
         purchasing.push(Purchase(msg.sender, _numOfTicket, _place, _row, _region, _sessionNum));
     }
     
     // Узнать забронированные место и время по номеру билета:
-    function getPlace(uint _ticketNum) public view returns(uint pPlace, uint pRow, uint pRegion, uint pSessionNum) {
+    function getPlace(bytes32 _ticketNum) public view returns(uint pPlace, uint pRow, uint pRegion, uint pSessionNum) {
         for(uint i = 0; i < purchasing.length; i++) {
             if(purchasing[i].ticketNum == _ticketNum) {
                 pPlace = purchasing[i].place;
