@@ -10,14 +10,65 @@
 
 <body>
 
-  <h1 align="center" style="margin-top: 40px"> Децентрализованный сервис продажи билетов</h1>
+<h1 align="center" style="margin-top: 40px"> Децентрализованный сервис продажи билетов</h1>
 
-  <h3 align="center" style="margin-top: 40px">Стоимость 1 билета: 10 finney<h3>
+<div class="container">
+	<div class="row">
+		<div class="col-25">
+			<h3>Текущая цена 1 билета:</h3>
+		</div>
+		<div class="col-25">
+			<input type='text' id='currentTicketPrice' name='currentTicketPrice' readonly>
+		</div>		 
+	</div>
+</div>
+
+<div>
+<h2>Установить новую цену билета:</h2>
+<h4>Только текущий владелец может изменить цену билета</h4>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-25">
+			<label for="newTicketPrice">Новая цена билета:</label>
+			</br><input type='button' value='Установить' onclick='setTicketPrice();'>		
+		</div>
+		<div class="col-25">
+			<input type='text' id='newTicketPrice' name='newTicketPrice' autofocus>
+		</div>
+		<div class="col-25">		
+			<select id='prices_unit' name='prices_unit'>
+				<option value='ether'>ether</option>
+				<option value='finney'>finney</option>
+				<option value='szabo'>szabo</option>
+				<option value='Gwei'>Gwei</option>
+				<option value='Mwei'>Mwei</option>
+				<option value='Kwei'>Kwei</option>
+				<option value='wei'>wei</option>
+			</select>
+		</div>		 
+	</div>
+</div>
+
+<div>
+<h2>Проверить цену билета:</h2>
+</div>
+<div class="container">
+	<div class="row">
+		<div class="col-25">
+			<label for="place">Номер билета:</label>
+			</br><input type='button' value='Проверить' onclick='verifeTicketPrice();'>
+		</div>
+		<div class="col-75">
+			<input type='text' id='verifingTicketNum' name='verifingTicketNum'>
+			<input type='text' id='ticketPrice' name='ticketPrice' readonly>
+		</div>		 
+	</div>
+</div>
 
 <div>
 <h2>Купить билет:</h2>
 </div>
-
 <div class="container">
 	<div class="row">
 		<div class="col-25">
@@ -68,11 +119,11 @@
 	<form action='' method='post'>
 		<div class="row">
 			<div class="col-25">
-				<label for="ticketNum">Номер билета:</label><br/>
-				<br/><label for="ticketNum">Место и время:</label>
+				<label for="testTicketNum">Номер билета:</label><br/>
+				<br/><label for="testTicketNum">Место и время:</label>
 			</div>
 			<div class="col-75">
-				<input type='text' id='ticketNum' name='ticketNum'><br/>
+				<input type='text' id='testTicketNum' name='testTicketNum'><br/>
 				<br/><input type='text' id='placeParam' name='placeParam' readonly>
 			</div>		 
 		</div><br/>		
@@ -96,6 +147,57 @@
 			</div>		 
 		</div>
 	</form>
+</div>
+
+<div>
+<h2>Смена владельца:</h2>
+</div>
+<div class="container">
+	<form action='' method='post'>
+		<div class="row">
+			<div class="col-25">
+				<label for="currentOwner">Текущий владелец:</label>
+			</div>
+			<div class="col-75">
+				<input type='text' id='currentOwner' name='currentOwner' readonly>
+			</div>
+		</div>
+	</form>
+</div>
+<div>
+<h3>Назначить кандидата во владельцы:</h3>
+<h4>Только текущий владелец может назначить кандидата во владельцы</h4>
+</div>
+<div class="container">
+	<form action='' method='post'>
+		<div class="row">
+			<div class="col-25">
+				<label for="candidate">Адрес кандидата:</label>
+				</br><input type='button' value='Назначить' onclick='newOwner();'>
+			</div>
+			<div class="col-75">
+				<input type='text' id='candidateAddress' name='candidateAddress'><br/>
+				<br/><input type='text' id='candidateAddressResult' name='candidateAddressResult' readonly>
+			</div>
+		</div>
+	</form>
+</div>
+<div>
+<h3>Подтвердить кандидата</h3>
+<h4>Подтвердить должен сам кандидат (со своего аккаунта):</h4>
+</div>
+<div class="container">
+	<form action='' method='post'>
+		<div class="row">
+			<div class="col-25">
+				<input type='button' value='Подтвердить' onclick='confirmOwner();'>
+				</br><label for="newOwner">Новый владелец:</label>
+			</div>
+			<div class="col-75">
+				<br/></br><input type='text' id='newOwner' name='newOwner' readonly>
+			</div>		 
+	</form>	
+	
 </div>
 
 </body>

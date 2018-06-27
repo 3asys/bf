@@ -8,14 +8,17 @@ contract TicketMan {
     // Покупка:
     struct Purchase {
         address buyer; // адрес покупателя
-        bytes32 ticketNum; // Номер билета
+        uint buydatetime; // Дата и время покупки билета
         uint place; // Место
         uint row; // Ряд
         uint region; // Сектор, группа мест (партер, бельэтаж, ...)
         uint sessionNum; // Номер сеанса
+        uint ticketprice; // Цена билета
     }
     
     Purchase[] public purchasing; // Массив из структуры Purcase
+    
+    mapping(bytes32 => Purchase) public ticketPlace;
     
     address public owner; // Адрес владельца контракта
     address candidate; // Адрес кандидата в новые владельцы контракта
@@ -28,6 +31,9 @@ contract TicketMan {
     }
     
     event getTicketNum(bytes32 indexed ticketNum);
+	event setCandidate(address indexed candidate);
+	event setNewOwner(address indexed owner);
+	event setNewPrice(uint indexed newPrice);
     
     constructor () public {
         // Указываем адрес на который должен зачисляться эфир за билеты:
@@ -46,13 +52,31 @@ contract TicketMan {
     function newOwner(address _owner) public onlyOwner {
         require(_owner != 0x0);
         candidate = _owner;
+		emit setCandidate(candidate); // Вызываем событие назначения кандидата во владельцы контракта
     }
     
     // Подтверждение кандидатом в owner-ы своего адреса
     function confirmOwner() public {
         require (msg.sender == candidate);
         owner = candidate;
+		emit setNewOwner(owner); // Вызываем событие назначения нового владельца контракта
     }
+    
+    // Установить цену билета:
+    function setTicketPrice(uint _ticketPrice) public onlyOwner {
+        ticketPrice = _ticketPrice;
+		emit setNewPrice(ticketPrice);
+    }
+    
+    // Получить цену конкретного билета:
+    function verifeTicketPrice(bytes32 _ticketNum) public view returns(uint isticketPrice) {
+        isticketPrice = ticketPlace[_ticketNum].ticketprice;
+    }
+    
+    // Получить текущую цену билета:
+    function getCurrentTicketPrice() public view returns(uint currentTicketPrice) {
+        currentTicketPrice = ticketPrice;
+    }    
     
     // Функция для получения эфира и выдачи билета:
     function getTicket(uint _place, uint _row, uint _region,  uint _sessionNum) public payable {
@@ -72,20 +96,23 @@ contract TicketMan {
     
     // Бронирование мест:
     function bookIt(uint _place, uint _row, uint _region, uint _sessionNum, bytes32 _numOfTicket) private {
+        ticketPlace[_numOfTicket].buyer = msg.sender;
+        ticketPlace[_numOfTicket].buydatetime = now;
+        ticketPlace[_numOfTicket].place = _place;
+        ticketPlace[_numOfTicket].row = _row;
+        ticketPlace[_numOfTicket].region = _region;
+        ticketPlace[_numOfTicket].sessionNum = _sessionNum;
+        ticketPlace[_numOfTicket].ticketprice = ticketPrice;		
         // Создаем новую запись в массиве:
-        purchasing.push(Purchase(msg.sender, _numOfTicket, _place, _row, _region, _sessionNum));
+        purchasing.push(Purchase(msg.sender, now, _place, _row, _region, _sessionNum, ticketPrice));
     }
     
     // Узнать забронированные место и время по номеру билета:
     function getPlace(bytes32 _ticketNum) public view returns(uint pPlace, uint pRow, uint pRegion, uint pSessionNum) {
-        for(uint i = 0; i < purchasing.length; i++) {
-            if(purchasing[i].ticketNum == _ticketNum) {
-                pPlace = purchasing[i].place;
-                pRow = purchasing[i].row;
-                pRegion = purchasing[i].region;
-                pSessionNum = purchasing[i].sessionNum;
-            }
-        }
+        pPlace = ticketPlace[_ticketNum].place;
+        pRow = ticketPlace[_ticketNum].row;
+        pRegion = ticketPlace[_ticketNum].region;
+        pSessionNum = ticketPlace[_ticketNum].sessionNum;
     }
     
     // Узнать количество проданных билетов:
