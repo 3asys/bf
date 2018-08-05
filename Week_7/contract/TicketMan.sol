@@ -108,13 +108,31 @@ contract TicketMan {
     }
     
     // Узнать забронированные место и время по номеру билета:
+    function getPplace(bytes32 _ticketNum) public view returns(uint pPlace) {
+        pPlace = ticketPlace[_ticketNum].place;
+    }
+    
+    function getProw(bytes32 _ticketNum) public view returns(uint pRow) {
+        pRow = ticketPlace[_ticketNum].row;
+    }
+    
+    function getPregion(bytes32 _ticketNum) public view returns(uint pRegion) {
+        pRegion = ticketPlace[_ticketNum].region;
+    }
+    
+    function getPsessionNum(bytes32 _ticketNum) public view returns(uint pSessionNum) {
+        pSessionNum = ticketPlace[_ticketNum].sessionNum;
+    }     
+    /**
+    // Вариант функции с возвратом всех 4-х значений одновременно:
     function getPlace(bytes32 _ticketNum) public view returns(uint pPlace, uint pRow, uint pRegion, uint pSessionNum) {
         pPlace = ticketPlace[_ticketNum].place;
         pRow = ticketPlace[_ticketNum].row;
         pRegion = ticketPlace[_ticketNum].region;
         pSessionNum = ticketPlace[_ticketNum].sessionNum;
-    }
-    
+        //string ticketData = pPlace+" "+string(pRow)+" "+string(pRegion)+" "+string(pSessionNum);
+    }    
+    */
     // Узнать количество проданных билетов:
     function getPurchasedTicketsNum() public view returns(uint pTicketNum) {
         pTicketNum = purchasing.length;

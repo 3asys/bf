@@ -19,9 +19,11 @@ window.addEventListener('load', function() {
 	}
 
 	// Сохраняем JSON ABI смарт-контракта:
-	const abi = [{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"verifeTicketPrice","outputs":[{"name":"isticketPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ticketPrice","type":"uint256"}],"name":"setTicketPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"purchasing","outputs":[{"name":"buyer","type":"address"},{"name":"buydatetime","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"},{"name":"ticketprice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getPlace","outputs":[{"name":"pPlace","type":"uint256"},{"name":"pRow","type":"uint256"},{"name":"pRegion","type":"uint256"},{"name":"pSessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"newOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"ticketPlace","outputs":[{"name":"buyer","type":"address"},{"name":"buydatetime","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"},{"name":"ticketprice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPurchasedTicketsNum","outputs":[{"name":"pTicketNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_place","type":"uint256"},{"name":"_row","type":"uint256"},{"name":"_region","type":"uint256"},{"name":"_sessionNum","type":"uint256"}],"name":"getTicket","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getCurrentTicketPrice","outputs":[{"name":"currentTicketPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"ticketNum","type":"bytes32"}],"name":"getTicketNum","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"candidate","type":"address"}],"name":"setCandidate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"}],"name":"setNewOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"newPrice","type":"uint256"}],"name":"setNewPrice","type":"event"}];
+	//const abi = [{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"verifeTicketPrice","outputs":[{"name":"isticketPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ticketPrice","type":"uint256"}],"name":"setTicketPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"purchasing","outputs":[{"name":"buyer","type":"address"},{"name":"buydatetime","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"},{"name":"ticketprice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getPlace","outputs":[{"name":"pPlace","type":"uint256"},{"name":"pRow","type":"uint256"},{"name":"pRegion","type":"uint256"},{"name":"pSessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"newOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"ticketPlace","outputs":[{"name":"buyer","type":"address"},{"name":"buydatetime","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"},{"name":"ticketprice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPurchasedTicketsNum","outputs":[{"name":"pTicketNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_place","type":"uint256"},{"name":"_row","type":"uint256"},{"name":"_region","type":"uint256"},{"name":"_sessionNum","type":"uint256"}],"name":"getTicket","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getCurrentTicketPrice","outputs":[{"name":"currentTicketPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"ticketNum","type":"bytes32"}],"name":"getTicketNum","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"candidate","type":"address"}],"name":"setCandidate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"}],"name":"setNewOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"newPrice","type":"uint256"}],"name":"setNewPrice","type":"event"}];
+	const abi = [{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getPplace","outputs":[{"name":"pPlace","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"verifeTicketPrice","outputs":[{"name":"isticketPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_ticketPrice","type":"uint256"}],"name":"setTicketPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getPsessionNum","outputs":[{"name":"pSessionNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"purchasing","outputs":[{"name":"buyer","type":"address"},{"name":"buydatetime","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"},{"name":"ticketprice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getPregion","outputs":[{"name":"pRegion","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_ticketNum","type":"bytes32"}],"name":"getProw","outputs":[{"name":"pRow","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"}],"name":"newOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"ticketPlace","outputs":[{"name":"buyer","type":"address"},{"name":"buydatetime","type":"uint256"},{"name":"place","type":"uint256"},{"name":"row","type":"uint256"},{"name":"region","type":"uint256"},{"name":"sessionNum","type":"uint256"},{"name":"ticketprice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getPurchasedTicketsNum","outputs":[{"name":"pTicketNum","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"confirmOwner","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_place","type":"uint256"},{"name":"_row","type":"uint256"},{"name":"_region","type":"uint256"},{"name":"_sessionNum","type":"uint256"}],"name":"getTicket","outputs":[],"payable":true,"stateMutability":"payable","type":"function"},{"constant":true,"inputs":[],"name":"getCurrentTicketPrice","outputs":[{"name":"currentTicketPrice","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"ticketNum","type":"bytes32"}],"name":"getTicketNum","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"candidate","type":"address"}],"name":"setCandidate","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"}],"name":"setNewOwner","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"newPrice","type":"uint256"}],"name":"setNewPrice","type":"event"}];
 	// Указываем адрес контракта:
-	const contractAddress = "0x47CE5D27e7a6E8f106b365964a6AD59e9b80AfC0";
+	//const contractAddress = "0x47CE5D27e7a6E8f106b365964a6AD59e9b80AfC0";
+	const contractAddress = "0x288FE44a1fb47784AbCb2B2D78347FD7f44bbCde";
 	// Получаем контракт:
 	//var contractInstance = web3.eth.contract(contractABI).at(contractAddress);
 	let MyContract = web3.eth.contract(abi);
@@ -76,6 +78,7 @@ window.addEventListener('load', function() {
 	
 	getCurrentTicketPrice();
 	getCurrentOwner();
+
 });
 
 function getCurrentOwner(){
@@ -179,7 +182,7 @@ async function getTicket(){
 
 	await myContractInstance.getTicket(place, row, region, sessionNum, 
 		{
-			gas: 321000,
+			gas: 3000000,
 			gasPrice: 10000000000,
 			value: priceValue
 		}, 
@@ -189,7 +192,7 @@ async function getTicket(){
 		}
 	);	
 }
-
+/*
 async function getPlace(){
 	let testTicketNum = parseInt(document.getElementById('testTicketNum').value);
 	await myContractInstance.getPlace(testTicketNum,
@@ -205,9 +208,58 @@ async function getPlace(){
 			} else {
 				console.error(error);
 			}
-		}	
+		}
 	);
 }
+*/
+
+async function getProw(){
+	testTicketNum = document.getElementById('testTicketNum').value;
+	await myContractInstance.getProw(testTicketNum,
+		function(error, result) {
+			if(!error) document.getElementById('placeParam').value = " Ряд: " + result;
+			else console.error(error);
+		}
+	);
+}
+
+async function getPplace(){
+	testTicketNum = document.getElementById('testTicketNum').value;
+	await myContractInstance.getPplace(testTicketNum,
+		function(error, result) {
+			if(!error) document.getElementById('placeParam').value = document.getElementById('placeParam').value + " Место: " + result;
+			else console.error(error);
+		}
+	);
+}
+
+async function getPregion(){
+	testTicketNum = document.getElementById('testTicketNum').value;
+	await myContractInstance.getPregion(testTicketNum,
+		function(error, result) {
+			if(!error) document.getElementById('placeParam').value = document.getElementById('placeParam').value + " Сектор: " + result;
+			else console.error(error);
+		}
+	);
+}
+
+async function getPsessionNum(){
+	testTicketNum = document.getElementById('testTicketNum').value;
+	await myContractInstance.getPsessionNum(testTicketNum,
+		function(error, result) {
+			if(!error) document.getElementById('placeParam').value = document.getElementById('placeParam').value + " Сеанс: " + result;
+			else console.error(error);
+		}
+	);
+}
+
+function getPlace(){
+	getProw();
+	getPplace();
+	getPregion();
+	getPsessionNum();
+}
+
 
 async function getPurchasedTicketsNum(){
 	await myContractInstance.getPurchasedTicketsNum(		
